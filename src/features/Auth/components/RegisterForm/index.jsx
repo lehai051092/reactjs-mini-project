@@ -9,6 +9,7 @@ import {LockOutlined} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import PasswordField from "../../../../components/form-controls/PasswordField";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,11 +38,7 @@ RegisterForm.defaultProps = {
 
 function RegisterForm({onFormSubmit}) {
   const classes = useStyles();
-  const schema = yup.object({
-    title: yup.string()
-      .required('Please enter title')
-      .min(6, 'Title is too short'),
-  }).required();
+  const schema = yup.object({}).required();
 
   const form = useForm({
     defaultValues: {
@@ -72,9 +69,9 @@ function RegisterForm({onFormSubmit}) {
       <form onSubmit={form.handleSubmit(handleFormSubmit)}>
         <InputField name="fullName" label="Full Name" form={form}/>
         <InputField name="email" label="Email" form={form}/>
-        <InputField name="password" label="Password" form={form}/>
-        <InputField name="retypePassword" label="Retype Password" form={form}/>
-        <Button className={classes.submit} variant="contained" color="primary" fullWidth>
+        <PasswordField name="password" label="Password" form={form}/>
+        <PasswordField name="retypePassword" label="Retype Password" form={form}/>
+        <Button type="submit" className={classes.submit} variant="contained" color="primary" fullWidth>
           Sign Up
         </Button>
       </form>
