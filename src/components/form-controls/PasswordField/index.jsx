@@ -8,6 +8,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import {logDOM} from "@testing-library/react";
 
 PasswordField.propTypes = {
   form: PropTypes.object.isRequired,
@@ -28,13 +30,15 @@ PasswordField.defaultProps = {
 function PasswordField(props) {
   const {form, name, label, disabled} = props;
   const [showPassword, setShowPassword] = useState(false);
+  const {formState:{errors}} = form;
+  const hasError = !!errors[name];
 
   const handleClickShowPassword = () => {
     setShowPassword(x => !x);
   }
 
   return (
-    <FormControl fullWidth margin="normal" variant="outlined">
+    <FormControl error={hasError} fullWidth margin="normal" variant="outlined">
       <InputLabel htmlFor={name}>{label}</InputLabel>
       <Controller
         form={form}
@@ -45,7 +49,6 @@ function PasswordField(props) {
             id={name}
             label={label}
             error={invalid}
-            helperText={error?.message}
             onChange={onChange}
             onBlur={onBlur}
             name={name}
@@ -66,6 +69,7 @@ function PasswordField(props) {
           />
         )}
       />
+      <FormHelperText>{errors[name]?.message}</FormHelperText>
     </FormControl>
   );
 }
