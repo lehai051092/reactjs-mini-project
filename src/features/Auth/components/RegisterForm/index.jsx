@@ -70,8 +70,6 @@ function RegisterForm({onFormSubmit}) {
     if (onFormSubmit) {
       await onFormSubmit(values);
     }
-
-    form.reset();
   }
 
   return (

@@ -32,7 +32,7 @@ function Register(props) {
       }
       enqueueSnackbar('Register successfully!!!', {variant: "success"});
     } catch (e) {
-      console.log('Register user fail:', e);
+      enqueueSnackbar(e.message, {variant: "error"});
     }
   };
 
