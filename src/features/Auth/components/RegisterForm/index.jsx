@@ -45,6 +45,7 @@ function RegisterForm({onFormSubmit}) {
       .test('should be enter two words', 'Please enter two words.', (value) => {
         return value.trim().split(' ').length >= 2;
       }),
+    email: string().required('Please enter your email.').email('Please enter format is email.'),
   });
 
   const form = useForm({
