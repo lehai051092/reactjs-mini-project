@@ -8,16 +8,18 @@ import PropTypes from "prop-types";
 
 Register.propTypes = {
   closeDialog: PropTypes.func,
+  toggleSetMode: PropTypes.func,
 };
 
 Register.defaultProps = {
   closeDialog: null,
+  toggleSetMode: null,
 }
 
 function Register(props) {
   const dispatch = useDispatch();
   const {enqueueSnackbar} = useSnackbar();
-  const {closeDialog} = props;
+  const {closeDialog, toggleSetMode} = props;
 
   const handleFormSubmit = async (values) => {
     values.username = values.email;
@@ -36,10 +38,14 @@ function Register(props) {
     }
   };
 
+  const handleToggleMode = () => {
+    if (!toggleSetMode) return;
+
+    toggleSetMode('login');
+  }
+
   return (
-    <>
-      <RegisterForm onFormSubmit={handleFormSubmit}/>
-    </>
+    <RegisterForm onFormSubmit={handleFormSubmit} handleFormChange={handleToggleMode}/>
   );
 }
 

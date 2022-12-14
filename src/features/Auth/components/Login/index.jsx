@@ -8,16 +8,18 @@ import LoginForm from "../LoginForm";
 
 Login.propTypes = {
   closeDialog: PropTypes.func,
+  toggleSetMode: PropTypes.func,
 };
 
 Login.defaultProps = {
   closeDialog: null,
+  toggleSetMode: null,
 }
 
 function Login(props) {
   const dispatch = useDispatch();
   const {enqueueSnackbar} = useSnackbar();
-  const {closeDialog} = props;
+  const {closeDialog, toggleSetMode} = props;
 
   const handleFormSubmit = async (values) => {
     try {
@@ -33,10 +35,14 @@ function Login(props) {
     }
   };
 
+  const handleToggleMode = () => {
+    if (!toggleSetMode) return;
+
+    toggleSetMode('register');
+  }
+
   return (
-    <>
-      <LoginForm onFormSubmit={handleFormSubmit}/>
-    </>
+    <LoginForm onFormSubmit={handleFormSubmit} handleFormChange={handleToggleMode}/>
   );
 }
 

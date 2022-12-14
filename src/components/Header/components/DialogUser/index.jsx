@@ -16,10 +16,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const MODE = {
+  LOGIN: "login",
+  REGISTER: "register",
+};
+
 DialogUser.propTypes = {};
 
 function DialogUser(props) {
   const [open, setOpen] = React.useState(false);
+  const [getMode, setMode] = React.useState(MODE.LOGIN);
   const classes = useStyles();
 
   const handleClickOpen = () => {
@@ -30,6 +36,10 @@ function DialogUser(props) {
     setOpen(false);
   };
 
+  const handleSetMode = (mode) => {
+    setMode(mode);
+  };
+
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>Login</Button>
@@ -38,7 +48,12 @@ function DialogUser(props) {
           <Close/>
         </IconButton>
         <DialogContent>
-          <Login closeDialog={handleClose}/>
+          {getMode === MODE.REGISTER && (
+            <Register closeDialog={handleClose} toggleSetMode={handleSetMode}/>
+          )}
+          {getMode === MODE.LOGIN && (
+            <Login closeDialog={handleClose} toggleSetMode={handleSetMode}/>
+          )}
         </DialogContent>
       </Dialog>
     </>

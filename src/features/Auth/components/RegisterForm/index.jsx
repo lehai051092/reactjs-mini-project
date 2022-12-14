@@ -4,7 +4,7 @@ import InputField from "../../../../components/form-controls/InputField";
 import {useForm} from "react-hook-form";
 import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Avatar, LinearProgress} from "@material-ui/core";
+import {Avatar, Box, LinearProgress} from "@material-ui/core";
 import {LockOutlined} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
@@ -32,18 +32,23 @@ const useStyles = makeStyles((theme) => ({
     top: theme.spacing(-3),
     left: 0,
     right: 0,
-  }
+  },
+  changeMode: {
+    textAlign: "center",
+  },
 }));
 
 RegisterForm.propTypes = {
   onFormSubmit: PropTypes.func,
+  handleFormChange: PropTypes.func,
 };
 
 RegisterForm.defaultProps = {
   onFormSubmit: null,
+  handleFormChange: null,
 };
 
-function RegisterForm({onFormSubmit}) {
+function RegisterForm({onFormSubmit, handleFormChange}) {
   const classes = useStyles();
   const schema = yup.object({
     fullName: yup.string()
@@ -72,6 +77,12 @@ function RegisterForm({onFormSubmit}) {
     }
   }
 
+  const handleChangeMod = () => {
+    if (!handleFormChange) return;
+
+    handleFormChange();
+  }
+
   return (
     <div className={classes.root}>
       {isSubmitting && <LinearProgress className={classes.progress}/>}
@@ -98,6 +109,11 @@ function RegisterForm({onFormSubmit}) {
           Sign Up
         </Button>
       </form>
+      <Box className={classes.changeMode}>
+        <Button color="primary" onClick={() => handleChangeMod()}>
+          Already have an account. Login here.
+        </Button>
+      </Box>
     </div>
   );
 }
