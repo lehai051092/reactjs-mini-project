@@ -93,6 +93,7 @@ function RegisterForm({onFormSubmit}) {
           variant="contained"
           color="primary"
           fullWidth
+          size="large"
         >
           Sign Up
         </Button>
