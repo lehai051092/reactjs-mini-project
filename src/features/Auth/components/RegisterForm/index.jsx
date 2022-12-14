@@ -47,6 +47,7 @@ function RegisterForm({onFormSubmit}) {
       }),
     email: yup.string().required('Please enter your email.').email('Please enter format is email.'),
     password: yup.string().required('Please enter your password.').min(6, 'Please enter your password min 6 characters.'),
+    retypePassword: yup.string().required('Please retype your password.').oneOf([yup.ref('password')], 'Retype password not match.'),
   });
   const form = useForm({
     defaultValues: {

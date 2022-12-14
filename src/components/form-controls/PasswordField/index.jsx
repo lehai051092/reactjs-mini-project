@@ -9,7 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {logDOM} from "@testing-library/react";
 
 PasswordField.propTypes = {
   form: PropTypes.object.isRequired,
