@@ -21,9 +21,9 @@ function DialogRegister(props) {
   return (
     <>
       <Button color="inherit" onClick={handleClickOpen}>Register</Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" disableEscapeKeyDown disableBackdropClick>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" disableEscapeKeyDown>
         <DialogContent>
-          <Register/>
+          <Register closeDialog={handleClose}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

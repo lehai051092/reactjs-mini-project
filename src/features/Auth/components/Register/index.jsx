@@ -3,11 +3,21 @@ import RegisterForm from "../RegisterForm";
 import {useDispatch} from "react-redux";
 import {register} from "../../userSlice";
 import {unwrapResult} from "@reduxjs/toolkit";
+import {useSnackbar} from "notistack";
+import PropTypes from "prop-types";
 
-Register.propTypes = {};
+Register.propTypes = {
+  closeDialog: PropTypes.func,
+};
+
+Register.defaultProps = {
+  closeDialog: null,
+}
 
 function Register(props) {
   const dispatch = useDispatch();
+  const {enqueueSnackbar} = useSnackbar();
+  const {closeDialog} = props;
 
   const handleFormSubmit = async (values) => {
     values.username = values.email;
@@ -15,9 +25,12 @@ function Register(props) {
     try {
       const action = register(values);
       const resultAction = await dispatch(action);
-      const user = unwrapResult(resultAction);
+      unwrapResult(resultAction);
 
-      console.log('Register user success:', user);
+      if (closeDialog) {
+        closeDialog();
+      }
+      enqueueSnackbar('Register successfully!!!', {variant: "success"});
     } catch (e) {
       console.log('Register user fail:', e);
     }
