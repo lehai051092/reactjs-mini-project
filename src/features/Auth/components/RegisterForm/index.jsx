@@ -4,7 +4,7 @@ import InputField from "../../../../components/form-controls/InputField";
 import {useForm} from "react-hook-form";
 import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Avatar} from "@material-ui/core";
+import {Avatar, LinearProgress} from "@material-ui/core";
 import {LockOutlined} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
@@ -13,6 +13,7 @@ import PasswordField from "../../../../components/form-controls/PasswordField";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: "relative",
     margin: theme.spacing(4),
   },
   avatar: {
@@ -25,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2, 0),
+  },
+  progress: {
+    position: "absolute",
+    top: theme.spacing(-3),
+    left: 0,
+    right: 0,
   }
 }));
 
@@ -57,10 +64,11 @@ function RegisterForm({onFormSubmit}) {
     },
     resolver: yupResolver(schema),
   });
+  const {isSubmitting} = form.formState;
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     if (onFormSubmit) {
-      onFormSubmit(values);
+      await onFormSubmit(values);
     }
 
     form.reset();
@@ -68,6 +76,7 @@ function RegisterForm({onFormSubmit}) {
 
   return (
     <div className={classes.root}>
+      {isSubmitting && <LinearProgress className={classes.progress}/>}
       <Avatar className={classes.avatar}>
         <LockOutlined/>
       </Avatar>
@@ -79,7 +88,14 @@ function RegisterForm({onFormSubmit}) {
         <InputField name="email" label="Email" form={form}/>
         <PasswordField name="password" label="Password" form={form}/>
         <PasswordField name="retypePassword" label="Retype Password" form={form}/>
-        <Button type="submit" className={classes.submit} variant="contained" color="primary" fullWidth>
+        <Button
+          disabled={isSubmitting}
+          type="submit"
+          className={classes.submit}
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
           Sign Up
         </Button>
       </form>
