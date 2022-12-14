@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import PasswordField from "../../../../components/form-controls/PasswordField";
+import {string} from "yup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,13 @@ RegisterForm.defaultProps = {
 
 function RegisterForm({onFormSubmit}) {
   const classes = useStyles();
-  const schema = yup.object({}).required();
+  const schema = yup.object({
+    fullName: string()
+      .required('Please enter your full name.')
+      .test('should be enter two words', 'Please enter two words.', (value) => {
+        return value.trim().split(' ').length >= 2;
+      }),
+  });
 
   const form = useForm({
     defaultValues: {
