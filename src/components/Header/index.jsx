@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
 import {Link} from "react-router-dom";
-import DialogRegister from "./components/DialogRegister";
+import DialogUser from "./components/DialogUser";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +34,7 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             <Link className={classes.link} to="/">Mini Project</Link>
           </Typography>
-          <DialogRegister/>
+          <DialogUser/>
         </Toolbar>
       </AppBar>
     </div>

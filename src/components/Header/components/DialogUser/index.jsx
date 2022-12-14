@@ -6,6 +6,7 @@ import Register from "../../../../features/Auth/components/Register";
 import IconButton from "@material-ui/core/IconButton";
 import {Close} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
+import Login from "../../../../features/Auth/components/Login";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -15,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-DialogRegister.propTypes = {};
+DialogUser.propTypes = {};
 
-function DialogRegister(props) {
+function DialogUser(props) {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -31,17 +32,17 @@ function DialogRegister(props) {
 
   return (
     <>
-      <Button color="inherit" onClick={handleClickOpen}>Register</Button>
+      <Button color="inherit" onClick={handleClickOpen}>Login</Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" disableEscapeKeyDown>
         <IconButton className={classes.closeButton} onClick={handleClose}>
           <Close/>
         </IconButton>
         <DialogContent>
-          <Register closeDialog={handleClose}/>
+          <Login closeDialog={handleClose}/>
         </DialogContent>
       </Dialog>
     </>
   );
 }
 
-export default DialogRegister;
+export default DialogUser;
