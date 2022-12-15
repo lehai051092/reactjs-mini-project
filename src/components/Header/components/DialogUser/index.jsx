@@ -4,9 +4,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Register from "../../../../features/Auth/components/Register";
 import IconButton from "@material-ui/core/IconButton";
-import {Close} from "@material-ui/icons";
+import {AccountCircle, Close} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import Login from "../../../../features/Auth/components/Login";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -24,6 +25,8 @@ const MODE = {
 DialogUser.propTypes = {};
 
 function DialogUser(props) {
+  const loginUserData = useSelector(state => state.user.current);
+  const isLoginUser = !!loginUserData.id;
   const [open, setOpen] = React.useState(false);
   const [getMode, setMode] = React.useState(MODE.LOGIN);
   const classes = useStyles();
@@ -42,7 +45,14 @@ function DialogUser(props) {
 
   return (
     <>
-      <Button color="inherit" onClick={handleClickOpen}>Login</Button>
+      {!isLoginUser && (
+        <Button color="inherit" onClick={handleClickOpen}>Login</Button>
+      )}
+      {isLoginUser && (
+        <IconButton color="inherit">
+          <AccountCircle/>
+        </IconButton>
+      )}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" disableEscapeKeyDown>
         <IconButton className={classes.closeButton} onClick={handleClose}>
           <Close/>
