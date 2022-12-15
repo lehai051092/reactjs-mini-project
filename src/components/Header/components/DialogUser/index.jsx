@@ -7,9 +7,10 @@ import IconButton from "@material-ui/core/IconButton";
 import {AccountCircle, Close} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import Login from "../../../../features/Auth/components/Login";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {logout} from "../../../../features/Auth/userSlice";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -27,6 +28,7 @@ const MODE = {
 DialogUser.propTypes = {};
 
 function DialogUser(props) {
+  const dispatch = useDispatch();
   const loginUserData = useSelector(state => state.user.current);
   const isLoginUser = !!loginUserData.id;
   const [open, setOpen] = React.useState(false);
@@ -52,6 +54,10 @@ function DialogUser(props) {
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogoutUser = () => {
+    dispatch(logout());
   };
 
   return (
@@ -80,7 +86,7 @@ function DialogUser(props) {
             getContentAnchorEl={null}
           >
             <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
-            <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
+            <MenuItem onClick={handleLogoutUser}>Logout</MenuItem>
           </Menu>
         </>
       )}
