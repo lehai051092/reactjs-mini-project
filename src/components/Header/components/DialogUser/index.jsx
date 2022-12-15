@@ -8,6 +8,8 @@ import {AccountCircle, Close} from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core/styles";
 import Login from "../../../../features/Auth/components/Login";
 import {useSelector} from "react-redux";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -29,6 +31,7 @@ function DialogUser(props) {
   const isLoginUser = !!loginUserData.id;
   const [open, setOpen] = React.useState(false);
   const [getMode, setMode] = React.useState(MODE.LOGIN);
+  const [getAnchorEl, setAnchorEl] = React.useState(null);
   const classes = useStyles();
 
   const handleClickOpen = () => {
@@ -43,15 +46,43 @@ function DialogUser(props) {
     setMode(mode);
   };
 
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       {!isLoginUser && (
         <Button color="inherit" onClick={handleClickOpen}>Login</Button>
       )}
       {isLoginUser && (
-        <IconButton color="inherit">
-          <AccountCircle/>
-        </IconButton>
+        <>
+          <IconButton color="inherit" onClick={handleClickMenu}>
+            <AccountCircle/>
+          </IconButton>
+          <Menu
+            anchorEl={getAnchorEl}
+            keepMounted
+            open={Boolean(getAnchorEl)}
+            onClose={handleCloseMenu}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            getContentAnchorEl={null}
+          >
+            <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+            <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
+          </Menu>
+        </>
       )}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" disableEscapeKeyDown>
         <IconButton className={classes.closeButton} onClick={handleClose}>
