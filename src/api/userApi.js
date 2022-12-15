@@ -1,13 +1,14 @@
 import axiosClient from "./axiosClient";
+import api from "../constants/api";
 
 const userApi = {
   register(data) {
-    const url = '/auth/local/register';
+    const url = api.REGISTER_API;
     return axiosClient.post(url, data);
   },
 
   login(data) {
-    const url = '/auth/local';
+    const url = api.LOGIN_API;
     return axiosClient.post(url, data);
   }
 }

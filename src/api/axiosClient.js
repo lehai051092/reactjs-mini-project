@@ -1,7 +1,8 @@
 import axios from "axios";
+import api from "../constants/api";
 
 const axiosClient = axios.create({
-  baseURL: 'https://api.ezfrontend.com',
+  baseURL: api.BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -25,7 +26,7 @@ axiosClient.interceptors.response.use(function (response) {
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
   const {config, status, data} = error.response;
-  const URLS = ['/auth/local/register', '/auth/local'];
+  const URLS = [api.REGISTER_API, api.LOGIN_API];
 
   if (URLS.includes(config.url) && status === 400) {
     const dataMessage = data.message;
