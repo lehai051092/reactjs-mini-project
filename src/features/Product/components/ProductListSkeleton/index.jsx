@@ -17,9 +17,11 @@ function ProductListSkeleton({limitSkeleton}) {
       <Grid container spacing={1}>
         {Array.from(new Array(limitSkeleton)).map((x, index) => (
           <Grid item key={index} xs={12} md={6} lg={4} xl={3}>
-            <Skeleton variant="rect" width="100%" height={118}/>
-            <Skeleton/>
-            <Skeleton width="60%"/>
+            <Box padding={1}>
+              <Skeleton variant="rect" width="100%" height={118}/>
+              <Skeleton/>
+              <Skeleton width="60%"/>
+            </Box>
           </Grid>
         ))}
       </Grid>

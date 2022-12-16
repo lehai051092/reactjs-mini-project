@@ -5,7 +5,7 @@ AuthFeature.propTypes = {};
 
 function AuthFeature(props) {
   return (
-    <div></div>
+    <div/>
   );
 }
 

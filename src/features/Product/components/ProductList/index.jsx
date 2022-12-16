@@ -1,15 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Box, Grid} from "@material-ui/core";
+import Product from "../Product";
 
 ProductList.propTypes = {
-
+  productList: PropTypes.array,
 };
 
-function ProductList(props) {
+ProductList.defaultProps = {
+  productList: [],
+}
+
+function ProductList({productList}) {
   return (
-    <div>
-      <h1>Product List</h1>
-    </div>
+    <Box>
+      <Grid container spacing={1}>
+        {productList.map((product) => (
+          <Grid item key={product.id} xs={12} md={6} lg={4} xl={3}>
+            <Product product={product}/>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }
 

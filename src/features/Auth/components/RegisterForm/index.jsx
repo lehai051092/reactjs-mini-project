@@ -84,7 +84,7 @@ function RegisterForm({onFormSubmit, handleFormChange}) {
   }
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       {isSubmitting && <LinearProgress className={classes.progress}/>}
       <Avatar className={classes.avatar}>
         <LockOutlined/>
@@ -114,7 +114,7 @@ function RegisterForm({onFormSubmit, handleFormChange}) {
           Already have an account. Login here.
         </Button>
       </Box>
-    </div>
+    </Box>
   );
 }
 

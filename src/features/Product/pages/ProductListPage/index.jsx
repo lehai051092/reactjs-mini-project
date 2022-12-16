@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {Box, Container, Grid, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import productApi from "../../../../api/productApi";
 import ProductListSkeleton from "../../components/ProductListSkeleton";
-import Typography from "@material-ui/core/Typography";
+import ProductList from "../../components/ProductList";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -13,7 +12,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
   },
   right: {
-    flex: "1 1 auto"
+    flex: "1 1 0"
   },
 }));
 
@@ -25,21 +24,19 @@ function ProductListPage(props) {
   const [getLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    (
-      async () => {
+    (async () => {
         try {
-          const {data, pagination} = await productApi.getAll({_page: 2, _limit: 10});
+          const {data, pagination} = await productApi.getAll({_page: 1, _limit: 10});
           console.log(data);
           setProductList(data);
 
         } catch (e) {
-          console.log('Fetch api product fail.');
+          console.log('Fetch api product fail: ', e);
         }
 
         setLoading(false);
       }
     )();
-
   }, []);
 
   return (
@@ -51,7 +48,7 @@ function ProductListPage(props) {
           </Grid>
           <Grid item className={classes.right}>
             <Paper elevation={0}>
-              {getLoading ? <ProductListSkeleton/> : <Typography>Product List</Typography>}
+              {getLoading ? <ProductListSkeleton/> : <ProductList productList={getProductList}/>}
             </Paper>
           </Grid>
         </Grid>

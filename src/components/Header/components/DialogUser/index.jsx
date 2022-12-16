@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {logout} from "../../../../features/Auth/userSlice";
+import {Box, Slide} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   closeButton: {
@@ -61,12 +62,12 @@ function DialogUser(props) {
   };
 
   return (
-    <>
+    <Box>
       {!isLoginUser && (
         <Button color="inherit" onClick={handleClickOpen}>Login</Button>
       )}
       {isLoginUser && (
-        <>
+        <Box>
           <IconButton color="inherit" onClick={handleClickMenu}>
             <AccountCircle/>
           </IconButton>
@@ -84,11 +85,12 @@ function DialogUser(props) {
               horizontal: 'right',
             }}
             getContentAnchorEl={null}
+            disableAutoFocusItem
           >
             <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
             <MenuItem onClick={handleLogoutUser}>Logout</MenuItem>
           </Menu>
-        </>
+        </Box>
       )}
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" disableEscapeKeyDown>
         <IconButton className={classes.closeButton} onClick={handleClose}>
@@ -103,7 +105,7 @@ function DialogUser(props) {
           )}
         </DialogContent>
       </Dialog>
-    </>
+    </Box>
   );
 }
 
