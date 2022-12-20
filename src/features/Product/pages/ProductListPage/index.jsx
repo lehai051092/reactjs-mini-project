@@ -4,6 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import productApi from "../../../../api/productApi";
 import ProductListSkeleton from "../../components/ProductListSkeleton";
 import ProductList from "../../components/ProductList";
+import {Pagination} from "@mui/material";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -22,14 +23,22 @@ function ProductListPage(props) {
   const classes = useStyles();
   const [getProductList, setProductList] = useState([]);
   const [getLoading, setLoading] = useState(true);
+  const [getPagination, setPagination] = useState({
+    limit: 9,
+    page: 1,
+    total: 10,
+  });
+  const [getFilters, setFilters] = useState({
+    _page: 1,
+    _limit: 9,
+  });
 
   useEffect(() => {
     (async () => {
         try {
-          const {data, pagination} = await productApi.getAll({_page: 1, _limit: 10});
-          console.log(data);
+          const {data, pagination} = await productApi.getAll(getFilters);
           setProductList(data);
-
+          setPagination(pagination);
         } catch (e) {
           console.log('Fetch api product fail: ', e);
         }
@@ -37,7 +46,14 @@ function ProductListPage(props) {
         setLoading(false);
       }
     )();
-  }, []);
+  }, [getFilters]);
+
+  const handlePageChange = (event, page) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      _page: page,
+    }));
+  }
 
   return (
     <Box>
@@ -49,6 +65,12 @@ function ProductListPage(props) {
           <Grid item className={classes.right}>
             <Paper elevation={0}>
               {getLoading ? <ProductListSkeleton/> : <ProductList productList={getProductList}/>}
+              <Pagination
+                color="primary"
+                count={Math.ceil(getPagination.total / getPagination.limit)}
+                page={getPagination.page}
+                onChange={handlePageChange}
+              />
             </Paper>
           </Grid>
         </Grid>
